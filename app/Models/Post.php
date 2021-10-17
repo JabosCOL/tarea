@@ -22,10 +22,10 @@ class Post extends Model
     ];
 
     public function users(){
-        return $this -> belongsTo(Users::class,'id')
+        return $this -> belongsTo(Users::class);
     }
 
     public function categories(){
-        return $this -> belongsTo(Category::class,'id');
+        return $this -> belongsTo(Category::class);
     }
 }
