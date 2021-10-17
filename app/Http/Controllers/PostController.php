@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-
-use Illuminate\Http\Request;
-use App\Models\Profile;
+use App\Models\Post;
 use App\Models\User;
+use App\Models\Category;
+use Illuminate\Http\Request;
 
-class ProfileController extends Controller
+ 
+
+class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,10 +18,9 @@ class ProfileController extends Controller
      */
     public function index()
     {
+        $datos['posts'] = Post::paginate(5);
         
-        $datos['profiles'] = Profile::paginate(5);
-        
-        return view('profile.index',$datos);
+        return view('post.index',$datos);
     }
 
     /**
@@ -29,10 +30,13 @@ class ProfileController extends Controller
      */
     public function create()
     {
-        $id = auth()->user()->id;
-        return view('profile.create',['profile'=> new Profile(),
-        'id' => $id
-        ] ); 
+        return view('post.create',[
+            'post'=> new Post(),
+            'users'=>User::pluck('id'),
+            'categories'=>Category::pluck('id')
+            // compact('users','categories')
+        ]);
+        
     }
 
     /**
@@ -44,17 +48,18 @@ class ProfileController extends Controller
     public function store(Request $request)
     {
         $datos = request()->except('_token');
-        Profile::insert($datos);
-        return redirect()->route('profile.index');
+
+        Post::insert($datos);
+        return redirect()->route('post.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Profile  $profile
+     * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Profile $profile)
+    public function show(Post $post)
     {
         //
     }
@@ -62,13 +67,13 @@ class ProfileController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Profile  $profile
+     * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function edit(Profile $profile)
+    public function edit(Post $post)
     {
         $id = auth()->user()->id;
-        return view('profile.edit', ['profile'=>$profile,
+        return view('post.edit', ['post'=>$post,
         'id'=>$id]);
 
     }
@@ -77,28 +82,29 @@ class ProfileController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Profile  $profile
+     * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
         $datos = $request->except(['_token','_method']);
-        Profile::where('id','=',$id)->update($datos);
-        $profile = Profile::findOrfail($id);
-        return redirect()->route('profile.index');
+        Post::where('id','=',$id)->update($datos);
+        $post = Post::findOrfail($id);
+        return redirect()->route('post.index');
 
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Profile  $profile
+     * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        $profile = Profile::findOrfail($id);
-        Profile::destroy($id);
-        return redirect()->route('profile.index');
+        $post = Post::findOrfail($id);
+        Post::destroy($id);
+        return redirect()->route('post.index');
     }
+    
 }

@@ -38,6 +38,10 @@
                             <a class="nav-link" href="{{ route('profile.index') }}">{{ __('Profiles') }}</a>
                         </li>
 
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('post.index') }}">{{ __('Post') }}</a>
+                        </li>
+
                     </ul>
 
                     <!-- Right Side Of Navbar -->
