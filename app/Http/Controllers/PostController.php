@@ -30,12 +30,16 @@ class PostController extends Controller
      */
     public function create()
     {
+        $id = auth()->user()->id;
+        $categories = Category::pluck('category','id');
+        //return $id; 
         return view('post.create',[
             'post'=> new Post(),
-            'users'=>User::pluck('id'),
-            'categories'=>Category::pluck('id')
+            'users'=>$id,
+            'categories'=>$categories]);
+            
             // compact('users','categories')
-        ]);
+        
         
     }
 
@@ -85,7 +89,7 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, $id)
     {
         $datos = $request->except(['_token','_method']);
         Post::where('id','=',$id)->update($datos);
@@ -100,7 +104,7 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy($id)
     {
         $post = Post::findOrfail($id);
         Post::destroy($id);

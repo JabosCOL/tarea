@@ -26,13 +26,19 @@
     value="{{ isset($post->video)?$post->video:old('video')}} ">
 </div>
 <div class="form-group">
-    @foreach ($users as $id =>$name)
-    <input id="users_id" class="form-control" type="number" name="users_id" hidden value="{{$id}}" disabled>
-    @endforeach 
+    @if ($users )
+    <input id="users_id" class="form-control" type="number" name="users_id" hidden value="{{$users}}" >
+    @endif
+</div>
+<div class="form-group">  
+    <label for="category_id" >Categoria</label>  <br>
+    <select name="category_id" id="category_id">
+        <option value="">Seleccione</option>
+        @foreach($categories as $id => $name)
+            <option value="{{$id}}"  @if ($id === $post->category_id) selected @endif> {{$name}}</option>
+        @endforeach    
+    </select>   
     
-    @foreach($categories as $id =>$name)
-    <input id="category_id" class="form-control" type="number" name="category_id" hidden value="{{$id}}" disabled>
-    @endforeach 
 </div>
 
 <button type="submit">Enviar</button>

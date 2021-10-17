@@ -16,7 +16,7 @@
 </div>
 <div class="form-group">
     @if ($id)
-        <input id="users_id" class="form-control" type="number" name="users_id" hidden value="{{$id}}" disabled>
+        <input id="users_id" class="form-control" type="number" name="users_id" hidden value="{{$id}} ">
     @endif    
 </div>
 
