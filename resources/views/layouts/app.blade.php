@@ -34,6 +34,10 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
 
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('profile.index') }}">{{ __('Profiles') }}</a>
+                        </li>
+
                     </ul>
 
                     <!-- Right Side Of Navbar -->
