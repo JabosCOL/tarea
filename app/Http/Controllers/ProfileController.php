@@ -30,6 +30,7 @@ class ProfileController extends Controller
     public function create()
     {
         $id = auth()->user()->id;
+        
         return view('profile.create',['profile'=> new Profile(),
         'id' => $id
         ] ); 
@@ -67,10 +68,16 @@ class ProfileController extends Controller
      */
     public function edit(Profile $profile)
     {
-        $id = auth()->user()->id;
-        return view('profile.edit', ['profile'=>$profile,
-        'id'=>$id]);
-
+        $id = auth()->user()->id;        
+        $user_id = User::where('id','=',$profile->users_id)->first()->id;
+        
+        if ($id == $user_id){
+            return view('profile.edit', ['profile'=>$profile,
+            'id'=>$id]);
+        }
+        else {
+            return redirect()->route('profile.index')->with('mensaje','Este perfil fue creado por otro usuario');
+        }
     }
 
     /**
@@ -95,10 +102,17 @@ class ProfileController extends Controller
      * @param  \App\Models\Profile  $profile
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Profile $profile)
     {
-        $profile = Profile::findOrfail($id);
-        Profile::destroy($id);
-        return redirect()->route('profile.index');
+        $profile = Profile::findOrfail($profile->id);
+        $id = auth()->user()->id;
+        $us_id = User::where('id','=',$profile->users_id)->first()->id;
+        if($id == $us_id) {
+            Profile::destroy($id);
+            return redirect()->route('profile.index');
+        }
+        else {
+            return redirect()->route('profile.index')->with('mensaje','Este perfil fue creado por otro usuario');
+        }
     }
 }

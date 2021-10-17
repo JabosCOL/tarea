@@ -15,8 +15,8 @@
     value="{{ isset($profile->website)?$profile->website:old('website')}} ">
 </div>
 <div class="form-group">
-    @if ($id)
-        <input id="users_id" class="form-control" type="number" name="users_id" hidden value="{{$id}} ">
+    @if ( $id )
+        <input id="users_id" class="form-control" type="number" name="users_id"  value="{{ $id }}" hidden>
     @endif    
 </div>
 

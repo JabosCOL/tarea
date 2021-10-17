@@ -26,8 +26,8 @@
     value="{{ isset($post->video)?$post->video:old('video')}} ">
 </div>
 <div class="form-group">
-    @if ($users )
-    <input id="users_id" class="form-control" type="number" name="users_id" hidden value="{{$users}}" >
+    @if ($user_id )
+    <input id="users_id" class="form-control" type="number" name="users_id" hidden value="{{$user_id}}" >
     @endif
 </div>
 <div class="form-group">  
