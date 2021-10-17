@@ -2,7 +2,7 @@
 <div class="form-group">
     <label for="title">Titulo</label>
     <input id="title" class="form-control" type="text" name="title"
-    value="{{ isset($profile->id)?$profile->id:old('id')}} ">
+    value="{{ isset($profile->title)?$profile->title:old('title')}} ">
 </div> 
 <div class="form-group">
     <label for="biography">Descripcion</label>

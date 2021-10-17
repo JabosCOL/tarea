@@ -24,10 +24,10 @@
             <td>{{ $profile->biography }}</td>
             <td>{{ $profile->website }}</td>
             <td>
-                <a href="{{ route('profile.edit') }}">Editar</a>
-                <form action="" method="post">
+                <a class="btn btn-primary" href="{{ route('profile.edit',$profile) }}" >Editar</a>
+                <form action="{{ route('profile.destroy',$profile->id)}}" method="post" class="d-inline">|
                     @csrf @method('DELETE')
-                    <input type="submit" value="Borrar">
+                    <input type="submit" value="Borrar" class="btn btn-danger" onclick="return confirm('Deseas borrar el perfil?')">
                 </form>
             </td>
         </tr>

@@ -67,7 +67,10 @@ class ProfileController extends Controller
      */
     public function edit(Profile $profile)
     {
-        //
+        $id = auth()->user()->id;
+        return view('profile.edit', ['profile'=>$profile,
+        'id'=>$id]);
+
     }
 
     /**
@@ -77,9 +80,13 @@ class ProfileController extends Controller
      * @param  \App\Models\Profile  $profile
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Profile $profile)
+    public function update(Request $request, $id)
     {
-        //
+        $datos = $request->except(['_token','_method']);
+        Profile::where('id','=',$id)->update($datos);
+        $profile = Profile::findOrfail($id);
+        return redirect()->route('profile.index');
+
     }
 
     /**
@@ -88,8 +95,10 @@ class ProfileController extends Controller
      * @param  \App\Models\Profile  $profile
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Profile $profile)
+    public function destroy($id)
     {
-        //
+        $profile = Profile::findOrfail($id);
+        Profile::destroy($id);
+        return redirect()->route('profile.index');
     }
 }
