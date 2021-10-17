@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PostController;
+
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -27,4 +30,7 @@ Route::get('/home', [ProfileController::class, 'index'])->name('index');
 Route::group( ['middleware'=>'auth'],function () {
     Route::get('/', [ProfileController::class, 'index'])->name('home');
 });
+
 Route::resource('profile', ProfileController::class)->names('profile');
+
+Route::resource('post', PostController::class)->names('post');
