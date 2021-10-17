@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,6 +18,13 @@ use Illuminate\Support\Facades\Auth;
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', function () {
+    return view('auth.login');
+});
 
-Route::resource('blog', UserController::class);
+Route::get('/home', [ProfileController::class, 'index'])->name('index');
+
+Route::group( ['middleware'=>'auth'],function () {
+    Route::get('/', [ProfileController::class, 'index'])->name('home');
+});
+Route::resource('profile', ProfileController::class)->names('profile');
