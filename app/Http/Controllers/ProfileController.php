@@ -29,8 +29,7 @@ class ProfileController extends Controller
      */
     public function create()
     {
-        $id = auth()->user()->id;
-        
+        $id = auth()->user()->id;        
         return view('profile.create',['profile'=> new Profile(),
         'id' => $id
         ] ); 

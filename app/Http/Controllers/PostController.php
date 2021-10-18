@@ -7,8 +7,7 @@ use App\Models\User;
 use App\Models\Category;
 use App\Models\Comment;
 use Illuminate\Http\Request;
-
- 
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -54,7 +53,15 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $datos = request()->except('_token');
-
+       
+        if ($request->hasFile('image')) {
+            $datos['image'] = $request->file('image')
+            ->store('uploads','public');
+        }
+        if ($request->hasFile('video')) {
+            $datos['video'] = $request->file('video')
+            ->store('uploads','public');
+        }       
         Post::insert($datos);
         return redirect()->route('post.index');
     }
@@ -105,6 +112,17 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
         $datos = $request->except(['_token','_method']);
+
+        if ($request->hasfile('image')) {
+            $post = Post::findOrfail($id);
+            Storage::delete(['public/'. $post->image]);
+            $datos['image'] = $request->file('image')->store('uploads','public');
+        }
+        if ($request->hasfile('video')) {
+            $post = Post::findOrfail($id);
+            Storage::delete(['public/'. $post->video]);
+            $datos['video'] = $request->file('video')->store('uploads','public');
+        }
         Post::where('id','=',$id)->update($datos);
         $post = Post::findOrfail($id);
         return redirect()->route('post.index');
