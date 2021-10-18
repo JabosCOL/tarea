@@ -8,9 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Profile extends Model
 {
     use HasFactory;
+    
 
     public function users()
-{
-    return $this->belongsTo(User::class,'users_id');
-}
+    {
+        return $this->belongsTo(User::class,'users_id');
+    }
 }

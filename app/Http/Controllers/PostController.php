@@ -35,7 +35,7 @@ class PostController extends Controller
         //return $id; 
         return view('post.create',[
             'post'=> new Post(),
-            'users'=>$id,
+            'user_id'=>$id,
             'categories'=>$categories]);
             
             // compact('users','categories')
@@ -77,8 +77,15 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $id = auth()->user()->id;
-        return view('post.edit', ['post'=>$post,
-        'id'=>$id]);
+        $user_id = User::where('id','=',$post->users_id)->first()->id;
+        $categories = Category::pluck('category','id');
+        if ($id == $user_id){
+            return view('post.edit', ['post'=>$post,
+            'user_id'=>$id,'categories'=>$categories]);
+        }
+        else {
+            return redirect()->route('post.index')->with('mensaje','Este post fue creado por otro usuario');
+        }
 
     }
 
@@ -104,11 +111,19 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        $post = Post::findOrfail($id);
-        Post::destroy($id);
-        return redirect()->route('post.index');
+        $post = Post::findOrfail($post->id);
+        $id = auth()->user()->id;
+        $us_id = User::where('id','=',$post->users_id)->first()->id;
+
+        if($id == $us_id) {
+            Post::destroy($post->id);
+            return redirect()->route('post.index');
+        }
+        else {
+            return redirect()->route('post.index')->with('mensaje','Este post fue creado por otro usuario');
+        }
     }
     
 }
