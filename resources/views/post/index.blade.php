@@ -14,7 +14,25 @@
         @endif
 <h1>Lista de Post</h1>
 
-<table class="table table-light">
+<a href="{{ route('post.create') }}" class="btn btn-primary">Nuevo Post</a>
+
+ <div class="d-flex flex-wrap justify-content-between align-items-start">
+    @foreach($posts as $post)
+    <div class="card border-0 shadow-sm mt-4 margin-auto" style="width: 18rem">
+        
+        <img src="..." class="card-img-top" alt="...">
+        <div class="card-body">
+        <h2 class="card-title">{{ $post->title }}</h2>
+        <h4 class="card-subtitle">{{ $post->cover }}</h4>
+        <p class="card-text">{{ $post->description }}</p>
+        <a href="{{ route('post.show',$post)}}" class="btn btn-primary">ver más</a>
+        </div>
+    </div>
+    @endforeach
+</div>   
+
+
+{{-- <table class="table table-light">
     <thead class="thead-light">
         <tr>
             <th>#</th>
@@ -23,6 +41,7 @@
             <th>Descripción</th>
             <th>imagenes</th>
             <th>Video</th>
+            <th>categoria</th>
             <th>Acciones</th>
         </tr>
     </thead>
@@ -36,6 +55,7 @@
             <td>{{ $post->description }}</td>
             <td>{{ $post->image }}</td>
             <td>{{ $post->video }}</td>
+            <td>{{ $post->categories->category }}</td>
             <td>
                 <a class="btn btn-primary" href="{{ route('post.edit',$post) }}" >Editar</a>
                 <form action="{{ route('post.destroy',$post)}}" method="post" class="d-inline">|
@@ -47,8 +67,6 @@
         @endforeach  
     </tbody>
     
-</table>
-
-<a href="{{ route('post.create') }}" class="btn btn-primary">Nuevo Post</a>
+</table> --}}
 </div>
 @endsection

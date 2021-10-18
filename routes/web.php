@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PostController;
 
@@ -34,3 +35,5 @@ Route::group( ['middleware'=>'auth'],function () {
 Route::resource('profile', ProfileController::class)->names('profile');
 
 Route::resource('post', PostController::class)->names('post');
+
+Route::resource('comment', CommentController::class)->names('comment');
