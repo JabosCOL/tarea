@@ -16,15 +16,21 @@
 </div>
 
 <div class="form-group">
-    <label for="image">Imagen</label>
-    <input id="image" class="form-control" type="text" name="image"
-    value="{{ isset($post->image)?$post->image:old('image')}} ">
+    <label for="image" >Imagen</label>
+        @if (isset($post->image))
+            <img src="{{  asset(('storage').'/'.$post->image) }}"   whidth="100" height="100"  >
+        @endif    
+        <input type="file" class="form-control" name="image" id="image" value=""><br>
 </div>
+
 <div class="form-group">
     <label for="video">Video</label>
-    <input id="video" class="form-control" type="text" name="video"
-    value="{{ isset($post->video)?$post->video:old('video')}} ">
+    @if (isset($post->video))
+        <img src="{{  asset(('storage').'/'.$post->video) }}"   whidth="100" height="100"  >
+    @endif    
+    <input type="file" class="form-control" name="video" id="video" value=""><br>
 </div>
+
 <div class="form-group">
     @if ($user_id )
     <input id="users_id" class="form-control" type="number" name="users_id" hidden value="{{$user_id}}" >

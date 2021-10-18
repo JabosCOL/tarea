@@ -18,9 +18,12 @@
 
  <div class="d-flex flex-wrap justify-content-between align-items-start">
     @foreach($posts as $post)
-    <div class="card border-0 shadow-sm mt-4 margin-auto" style="width: 18rem">
+    <div class="card border-0 shadow-sm mt-4 mx-auto" style="width: 18rem">
+        @if ($post->image)
+            <img src="{{ asset('storage'.'/'.$post->image)}}" class="card-img-top" alt="..."  height="200">
+        @endif
         
-        <img src="..." class="card-img-top" alt="...">
+               
         <div class="card-body">
         <h2 class="card-title">{{ $post->title }}</h2>
         <h4 class="card-subtitle">{{ $post->cover }}</h4>
