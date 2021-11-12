@@ -38,8 +38,8 @@ Route::resource('post', PostController::class)->names('post');
 
 Route::resource('comment', CommentController::class)->names('comment');
 
-Route::get('/artisan/storage', function() {
-    $command = 'storage:link';
-    $result = Artisan::call($command);
-    return Artisan::output();
+Route::get('storage-link', function() {
+    
+     Artisan::call('storage:link');
+    
 });
