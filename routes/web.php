@@ -26,10 +26,10 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('/home', [ProfileController::class, 'index'])->name('index');
+Route::get('/home', [PostController::class, 'index'])->name('index');
 
 Route::group( ['middleware'=>'auth'],function () {
-    Route::get('/', [ProfileController::class, 'index'])->name('home');
+    Route::get('/', [PostController::class, 'index'])->name('home');
 });
 
 Route::resource('profile', ProfileController::class)->names('profile');

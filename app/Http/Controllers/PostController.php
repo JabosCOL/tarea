@@ -75,9 +75,9 @@ class PostController extends Controller
     public function show(Post $post)
     {
         $post = Post::findOrFail($post->id);
-        $comments= Comment::pluck('comments', 'posts_id');
+        
 
-        return view('post.show', ['posts'=>$post, 'comments'=>$comments]);
+        return view('post.show', ['posts'=>$post,]);
 
     }
 
