@@ -3,7 +3,7 @@
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PostController;
-
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -37,3 +37,9 @@ Route::resource('profile', ProfileController::class)->names('profile');
 Route::resource('post', PostController::class)->names('post');
 
 Route::resource('comment', CommentController::class)->names('comment');
+
+Route::get('/artisan/storage', function() {
+    $command = 'storage:link';
+    $result = Artisan::call($command);
+    return Artisan::output();
+});
